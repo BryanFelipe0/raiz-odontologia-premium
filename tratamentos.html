@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tratamentos — Raiz Odontologia</title>
+<meta name="description" content="Conheça todos os tratamentos da Raiz Odontologia: implantes, alinhadores, canal, lentes de contato, restaurações e prevenção.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="tratamentos">
+<main>
+  <section class="page-hero short" data-scene data-density="1" data-flies="20">
+    <div class="wrap page-hero-grid">
+      <div class="page-hero-text">
+        <span class="eyebrow">Tratamentos</span>
+        <h1><span class="line"><span>Do cuidado diário</span></span><span class="line"><span>à <span class="serif">reabilitação.</span></span></span></h1>
+        <p class="lead">Seis especialidades, um só lugar. Cada tratamento é planejado digitalmente e conduzido com calma, do primeiro exame ao resultado final.</p>
+        <div class="hero-ctas">
+          <a href="agendar.html?p=avaliacao" class="btn btn-green">Agendar avaliação <span class="arr">→</span></a>
+          <a href="#lista" class="btn btn-glass">Ver tratamentos</a>
+        </div>
+      </div>
+      <div class="page-hero-obj" id="heroObj"><div class="obj-glow"></div><div class="obj-float"></div><div class="obj-shadow"></div></div>
+    </div>
+  </section>
+
+  <section class="section" id="lista">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><span class="kicker">Especialidades</span><h2 class="h2">Escolha por onde <span class="serif">começar.</span></h2></div>
+        <p>Clique em um tratamento para ver como funciona, as etapas, as dúvidas frequentes e agendar direto.</p>
+      </div>
+      <div class="treat-grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div><span class="kicker">Guia rápido</span><h2 class="h2">Qual tratamento é <span class="serif">para mim?</span></h2></div>
+        <p>Um ponto de partida. Na avaliação, o diagnóstico completo mostra o melhor caminho para o seu caso.</p>
+      </div>
+      <div class="guide">
+        <div class="guide-card rv"><span class="q">Perdi um dente</span><h4>Implantes</h4><p>Repõem a raiz e a coroa com firmeza de dente natural, sem desgastar os vizinhos.</p><a href="implantes.html">Ver implantes →</a></div>
+        <div class="guide-card rv" style="transition-delay:.08s"><span class="q">Dentes tortos</span><h4>Alinhadores</h4><p>Placas transparentes e removíveis que alinham o sorriso sem bráquetes.</p><a href="alinhadores.html">Ver alinhadores →</a></div>
+        <div class="guide-card rv" style="transition-delay:.16s"><span class="q">Estou com dor</span><h4>Tratamento de canal</h4><p>Alivia a dor e salva o dente, com microscópio e, em geral, em uma sessão.</p><a href="canal.html">Ver canal →</a></div>
+        <div class="guide-card rv"><span class="q">Quero mudar o sorriso</span><h4>Lentes de contato</h4><p>Facetas ultrafinas que corrigem cor, forma e tamanho com naturalidade.</p><a href="lentes.html">Ver lentes →</a></div>
+        <div class="guide-card rv" style="transition-delay:.08s"><span class="q">Dente lascado ou cárie</span><h4>Restaurações</h4><p>Reparos na cor exata do dente, feitos em uma única sessão.</p><a href="restauracoes.html">Ver restaurações →</a></div>
+        <div class="guide-card rv" style="transition-delay:.16s"><span class="q">Só quero cuidar</span><h4>Prevenção</h4><p>Limpeza, check-up e acompanhamento para a família inteira.</p><a href="prevencao.html">Ver prevenção →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="ctaSlot"></div>
+</main>
+<script src="assets/data.js"></script>
+<script src="assets/site.js"></script>
+<script>
+  (() => {
+    const D = RAIZ_DATA, R = RAIZ;
+    document.querySelector('#heroObj .obj-float').innerHTML = '<img class="premium-tooth" src="assets/images/hero-premium.png" alt="Dente branco de porcelana" decoding="async">';
+    document.getElementById('grid').innerHTML = D.treatments.map(t => R.miniCard(t)).join('');
+    document.getElementById('ctaSlot').outerHTML = R.ctaBand('agendar.html');
+    R.initDynamic(document);
+    R.start();
+  })();
+</script>
+</body>
+</html>

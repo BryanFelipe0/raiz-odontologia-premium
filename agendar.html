@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agendar consulta — Raiz Odontologia</title>
+<meta name="description" content="Agende sua consulta na Raiz Odontologia: escolha o procedimento, a data e o horário e confirme pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="agendar">
+<main>
+  <section class="page-hero short" data-scene data-density=".9" data-flies="16" style="min-height:56svh">
+    <div class="wrap page-hero-grid">
+      <div class="page-hero-text">
+        <span class="eyebrow">Agendamento online</span>
+        <h1><span class="line"><span>Agende em <span class="serif">4 passos.</span></span></span></h1>
+        <p class="lead">Escolha o procedimento, a data e o horário. Ao final, a mensagem já vai pronta para o nosso WhatsApp — é só enviar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="book">
+    <div class="wrap book-grid">
+      <div>
+        <!-- 1. Procedimento -->
+        <div class="book-step active" id="step1">
+          <div class="bs-head"><span class="bs-n">1</span><div><h3>Qual procedimento?</h3><small>Escolha o que você deseja fazer</small></div></div>
+          <div class="procs" id="procs" role="group" aria-label="Procedimentos"></div>
+        </div>
+
+        <!-- 2 e 3. Data e horário -->
+        <div class="book-step locked" id="step2">
+          <div class="bs-head"><span class="bs-n">2</span><div><h3>Data e horário</h3><small>Atendemos de segunda a sábado</small></div></div>
+          <div class="cal-wrap">
+            <div>
+              <div class="cal-head">
+                <b id="calTitle"></b>
+                <div class="cal-nav">
+                  <button id="prevM" aria-label="Mês anterior"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 18l-6-6 6-6"/></svg></button>
+                  <button id="nextM" aria-label="Próximo mês"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 18l6-6-6-6"/></svg></button>
+                </div>
+              </div>
+              <div class="cal" id="cal"></div>
+              <div class="cal-legend"><span><i style="background:var(--green-2)"></i>Hoje</span><span><i style="background:#f2c94c"></i>Sábado (8h às 14h)</span><span><i style="background:#c3ccc6"></i>Indisponível</span></div>
+            </div>
+            <div>
+              <div class="slots-title" id="slotsTitle">Escolha uma data</div>
+              <div id="slots"><div class="slots-empty">Selecione um dia no calendário para ver os horários disponíveis.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Dados -->
+        <div class="book-step locked" id="step3">
+          <div class="bs-head"><span class="bs-n">3</span><div><h3>Seus dados</h3><small>Só o essencial para confirmarmos</small></div></div>
+          <div class="fields">
+            <div class="field"><label for="fName">Nome completo *</label><input id="fName" autocomplete="name" placeholder="Como podemos te chamar?"></div>
+            <div class="field"><label>Já é paciente da Raiz?</label>
+              <div class="radio-row"><label><input type="radio" name="first" value="Sim" checked> Primeira consulta</label><label><input type="radio" name="first" value="Não, já sou paciente"> Já sou paciente</label></div>
+            </div>
+            <div class="field full"><label>Período de preferência caso o horário não esteja livre</label>
+              <div class="radio-row"><label><input type="radio" name="alt" value="Qualquer horário" checked> Qualquer</label><label><input type="radio" name="alt" value="Manhã"> Manhã</label><label><input type="radio" name="alt" value="Tarde"> Tarde</label><label><input type="radio" name="alt" value="Noite"> Noite</label></div>
+            </div>
+            <div class="field full"><label for="fObs">Observações (opcional)</label><textarea id="fObs" placeholder="Ex.: sinto dor ao mastigar do lado direito, tenho convênio, prefiro anestesia com sedação…"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumo -->
+      <aside class="summary" aria-live="polite">
+        <div class="s-top">
+          <div class="mini-sky"></div><div class="mini-field"></div><canvas id="sumGrass"></canvas>
+          <div class="s-obj" id="sumObj"></div>
+        </div>
+        <div class="s-body">
+          <h3>Resumo do agendamento</h3>
+          <ul class="s-list">
+            <li><span>Procedimento</span><b id="sProc" class="empty">—</b></li>
+            <li><span>Data</span><b id="sDate" class="empty">—</b></li>
+            <li><span>Horário</span><b id="sTime" class="empty">—</b></li>
+            <li><span>Nome</span><b id="sName" class="empty">—</b></li>
+          </ul>
+          <div class="s-preview-lbl">Prévia da mensagem</div>
+          <div class="s-preview" id="sPreview"></div>
+          <a class="btn wa-btn disabled" id="waBtn" href="#" target="_blank" rel="noopener" aria-disabled="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1.1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3z"/></svg>
+            Confirmar pelo WhatsApp
+          </a>
+          <div class="s-missing" id="sMissing"></div>
+          <p class="s-note">O horário é reservado após a confirmação da nossa equipe pelo WhatsApp.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+<script src="assets/data.js"></script>
+<script src="assets/site.js"></script>
+<script>
+(() => {
+  const D = RAIZ_DATA, C = D.clinic, R = RAIZ;
+  const $ = id => document.getElementById(id);
+  const state = { proc: null, date: null, time: null, name: '' };
+
+  /* ---------- Procedimentos ---------- */
+  $('procs').innerHTML = D.bookingOptions.map(o => `
+    <button class="proc" data-slug="${o.slug}" aria-pressed="false">
+      <span class="p-ic"><img class="booking-treatment-image" src="assets/images/${o.slug}.png" alt="" loading="lazy"></span>
+      <span><b>${o.name}</b><small>${o.desc}</small></span>
+      <span class="check"></span>
+    </button>`).join('');
+  $('procs').addEventListener('click', e => {
+    const b = e.target.closest('.proc'); if (!b) return;
+    selectProc(b.dataset.slug, true);
+  });
+  const selectProc = (slug, scroll) => {
+    const o = D.bookingOptions.find(x => x.slug === slug); if (!o) return;
+    state.proc = o;
+    document.querySelectorAll('.proc').forEach(b => b.setAttribute('aria-pressed', b.dataset.slug === slug));
+    $('sumObj').innerHTML = `<img class="booking-summary-image" src="assets/images/${o.slug}.png" alt="">`;
+    update();
+    if (scroll) setTimeout(() => $('step2').scrollIntoView({ behavior: R.reduce ? 'auto' : 'smooth', block: 'start' }), 150);
+  };
+
+  /* ---------- Calendário ---------- */
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const maxDate = new Date(today); maxDate.setDate(maxDate.getDate() + 60);
+  let view = new Date(today.getFullYear(), today.getMonth(), 1);
+  const DOW = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  const MONTHS = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  const WEEKDAYS = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+  // Feriados nacionais fixos (exemplo)
+  const HOLIDAYS = ['01-01', '04-21', '05-01', '09-07', '10-12', '11-02', '11-15', '11-20', '12-25'];
+  const key = d => `${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const pad = n => String(n).padStart(2, '0');
+  const fmtShort = d => `${pad(d.getDate())}/${pad(d.getMonth() + 1)}`;
+  const fmtLong = d => `${WEEKDAYS[d.getDay()]}, ${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+  const isOpenDay = d => d >= today && d <= maxDate && d.getDay() !== 0 && !HOLIDAYS.includes(key(d));
+
+  const renderCal = () => {
+    const mn = MONTHS[view.getMonth()]; $('calTitle').textContent = `${mn[0].toUpperCase() + mn.slice(1)} de ${view.getFullYear()}`;
+    const first = new Date(view), days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    let html = DOW.map(d => `<span class="dow">${d}</span>`).join('');
+    for (let i = 0; i < first.getDay(); i++) html += '<span></span>';
+    for (let n = 1; n <= days; n++) {
+      const d = new Date(view.getFullYear(), view.getMonth(), n);
+      const sel = state.date && d.getTime() === state.date.getTime();
+      const cls = [d.getTime() === today.getTime() ? 'today' : '', d.getDay() === 6 ? 'sat' : ''].join(' ');
+      const hol = HOLIDAYS.includes(key(d));
+      html += `<button class="${cls}" data-t="${d.getTime()}" ${isOpenDay(d) ? '' : 'disabled'} aria-pressed="${!!sel}" aria-label="${fmtLong(d)}${hol ? ' (feriado)' : ''}">${n}</button>`;
+    }
+    $('cal').innerHTML = html;
+    $('prevM').disabled = view <= new Date(today.getFullYear(), today.getMonth(), 1);
+    $('nextM').disabled = new Date(view.getFullYear(), view.getMonth() + 1, 1) > maxDate;
+  };
+  $('prevM').onclick = () => { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCal(); };
+  $('nextM').onclick = () => { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCal(); };
+  $('cal').addEventListener('click', e => {
+    const b = e.target.closest('button[data-t]'); if (!b || b.disabled) return;
+    state.date = new Date(+b.dataset.t); state.time = null;
+    renderCal(); renderSlots(); update();
+  });
+
+  /* ---------- Horários ---------- */
+  // Ocupação simulada, sempre igual para a mesma data e horário
+  const busy = (d, t) => { let h = 0; const s = d.toDateString() + t; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h % 4 === 0; };
+  const slotsFor = d => {
+    const end = d.getDay() === 6 ? 14 : 21, out = [];
+    const now = new Date(), isToday = d.getTime() === today.getTime();
+    for (let h = 8; h < end; h++) for (const m of [0, 30]) {
+      if (h === 12 && d.getDay() !== 6) continue;            // almoço
+      const t = `${pad(h)}:${pad(m)}`;
+      const past = isToday && (h * 60 + m) < (now.getHours() * 60 + now.getMinutes() + 60);
+      out.push({ t, h, off: past || busy(d, t) });
+    }
+    return out;
+  };
+  const renderSlots = () => {
+    const d = state.date;
+    if (!d) return;
+    $('slotsTitle').textContent = `Horários para ${fmtLong(d)}`;
+    const all = slotsFor(d);
+    if (!all.some(s => !s.off)) { $('slots').innerHTML = '<div class="slots-empty">Não há horários livres nesse dia. Escolha outra data ou fale com a gente pelo WhatsApp.</div>'; return; }
+    const groups = [['Manhã', s => s.h < 12], ['Tarde', s => s.h >= 12 && s.h < 18], ['Noite', s => s.h >= 18]];
+    $('slots').innerHTML = groups.map(([g, f]) => {
+      const list = all.filter(f); if (!list.length) return '';
+      return `<div class="slot-group">${g}</div><div class="slots">${list.map(s => `<button data-t="${s.t}" ${s.off ? 'disabled aria-label="' + s.t + ' indisponível"' : ''} aria-pressed="${state.time === s.t}">${s.t}</button>`).join('')}</div>`;
+    }).join('');
+  };
+  $('slots').addEventListener('click', e => {
+    const b = e.target.closest('button[data-t]'); if (!b || b.disabled) return;
+    state.time = b.dataset.t;
+    renderSlots(); update();
+    if (!state.name) setTimeout(() => { $('step3').scrollIntoView({ behavior: R.reduce ? 'auto' : 'smooth', block: 'center' }); $('fName').focus({ preventScroll: true }); }, 200);
+  });
+
+  /* ---------- Dados ---------- */
+  $('fName').addEventListener('input', e => { state.name = e.target.value.trim(); update(); });
+  $('fObs').addEventListener('input', update);
+  document.querySelectorAll('input[type=radio]').forEach(r => r.addEventListener('change', update));
+
+  /* ---------- Resumo + WhatsApp ---------- */
+  const setVal = (id, v) => { const el = $(id); el.textContent = v || '—'; el.classList.toggle('empty', !v); };
+  function update() {
+    const { proc, date, time, name } = state;
+    setVal('sProc', proc && proc.name);
+    setVal('sDate', date && `${WEEKDAYS[date.getDay()].replace('-feira', '')}, ${fmtShort(date)}`);
+    setVal('sTime', time);
+    setVal('sName', name);
+    $('step1').classList.toggle('done', !!proc);
+    $('step2').classList.toggle('locked', !proc);
+    $('step2').classList.toggle('active', !!proc && !(date && time));
+    $('step2').classList.toggle('done', !!(date && time));
+    $('step3').classList.toggle('locked', !(proc && date && time));
+    $('step3').classList.toggle('active', !!(proc && date && time));
+    $('step3').classList.toggle('done', !!(proc && date && time && name));
+    $('step1').classList.toggle('active', !proc);
+
+    const first = document.querySelector('input[name=first]:checked').value;
+    const alt = document.querySelector('input[name=alt]:checked').value;
+    const obs = $('fObs').value.trim();
+    const lines = [
+      `Olá, ${C.name}! 🌿`,
+      `Gostaria de agendar uma consulta:`,
+      ``,
+      `🦷 Procedimento: ${proc ? proc.name : '…'}`,
+      `📅 Data: ${date ? fmtLong(date) : '…'}`,
+      `🕐 Horário: ${time || '…'}`,
+      `👤 Nome: ${name || '…'}`,
+      `📋 Primeira consulta? ${first}`,
+      `🔁 Se o horário não estiver livre: ${alt}`,
+    ];
+    if (obs) lines.push(`📝 Observações: ${obs}`);
+    lines.push('', 'Aguardo a confirmação. Obrigado(a)!');
+    const msg = lines.join('\n');
+    $('sPreview').textContent = msg;
+
+    const missing = [!proc && 'procedimento', !date && 'data', !time && 'horário', !name && 'nome'].filter(Boolean);
+    const ok = !missing.length;
+    const btn = $('waBtn');
+    btn.classList.toggle('disabled', !ok);
+    btn.setAttribute('aria-disabled', !ok);
+    btn.href = ok ? R.waLink(msg) : '#';
+    $('sMissing').textContent = ok ? '' : `Falta escolher: ${missing.join(', ')}.`;
+  }
+  $('waBtn').addEventListener('click', e => { if ($('waBtn').classList.contains('disabled')) e.preventDefault(); });
+
+  /* ---------- Início ---------- */
+  R.addMeadow($('sumGrass'), { density: .6, tall: .6, flies: 5 });
+  $('sumObj').innerHTML = '<img class="booking-summary-image" src="assets/images/prevencao.png" alt="">';
+  renderCal();
+  const pre = new URLSearchParams(location.search).get('p');
+  if (pre) selectProc(pre, false);
+  update();
+  R.start();
+})();
+</script>
+</body>
+</html>

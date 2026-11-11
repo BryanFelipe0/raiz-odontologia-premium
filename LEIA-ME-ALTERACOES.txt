@@ -1,0 +1,16 @@
+RAIZ ODONTOLOGIA — VERSÃO PREMIUM COMPLETA
+
+Esta é uma CÓPIA de teste. Não sobrescreva a pasta original antes de conferir.
+
+Substituições visuais:
+- Hero principal e banners de Tratamentos e A Clínica: dente branco premium.
+- Cards de Início e Tratamentos: imagens individuais dos seis tratamentos.
+- Páginas individuais (implantes, alinhadores, canal, lentes, restaurações e prevenção): imagens premium nos banners, no lugar das ilustrações antigas.
+- Cards de outros tratamentos: imagens premium.
+- Agendamento: imagens premium nas opções e no resumo.
+- Prevenção: imagem provisória do dente premium, ainda não é ilustração específica de prevenção.
+
+As animações de flutuação e entrada dos contêineres foram mantidas. Imagens PNG não têm rotação 3D real.
+As ilustrações SVG antigas ainda existem como definições em data.js para preservar compatibilidade, mas não são mais usadas nos banners individuais ou agendamento. Ícones decorativos e ilustrações de ambientes foram preservados.
+
+TESTES: verificação estática das referências e sintaxe JavaScript; ainda é necessário conferir visualmente no navegador (desktop e celular).

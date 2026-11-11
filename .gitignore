@@ -1,0 +1,4 @@
+﻿.impeccable/
+node_modules/
+.env
+.env.*
